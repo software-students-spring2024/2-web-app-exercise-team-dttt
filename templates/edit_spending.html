@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Spending Entry</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Edit Spending Entry</h1>
+    <form action="/edit_spending/{{ spending._id }}" method="post">
+        <input type="text" name="category" placeholder="Category" value="{{ spending.category }}" required>
+        <input type="number" name="amount" placeholder="Amount" value="{{ spending.amount }}" required>
+        <input type="text" name="description" placeholder="Description" value="{{ spending.description }}" required>
+        <input type="date" name="date" value="{{ spending.date }}" required>
+        <button type="submit">Update Entry</button>
+    </form>
+    <a href="/">Back to Dashboard</a>
+</body>
+</html>
