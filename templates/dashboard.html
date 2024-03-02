@@ -6,22 +6,22 @@
 </head>
 <body>
     <h1>Dashboard</h1>
-    <a href="/logout">Logout</a> | <a href="/set_budget">Set Budget</a> | <a href="/add_income">Add Income</a> | <a href="/add">Add New Budget Entry</a>
+    <a href="/">Home</a> | <a href="/set_budget">Set Budget</a> | <a href="/add_spending">Add Spending</a> | <a href="/add_income">Add Income</a> | <a href="/logout">Logout</a>
     <h2>Financial Overview</h2>
-    <p><strong>Total Budget:</strong> {{ total_budget }}</p>
     <p><strong>Total Income:</strong> {{ total_income }}</p>
-    <p><strong>Total Expenses:</strong> {{ total_budget + total_income - remaining_budget }}</p>
+    <p><strong>Total Spending:</strong> {{ total_spending }}</p>
     <p><strong>Remaining Budget:</strong> {{ remaining_budget }}</p>
+    <p><strong>Original Budget:</strong> {{ total_budget }}</p>
     <form action="/search" method="get">
         <input type="text" name="query" placeholder="Search by Category">
         <button type="submit">Search</button>
     </form>
     <ul>
-        {% for item in budget %}
+        {% for item in search_results %}
         <li>
             {{ item.category }}: {{ item.amount }} - {{ item.description }} ({{ item.date }})
-            <a href="/edit/{{ item._id }}">Edit</a>
-            <form action="/delete/{{ item._id }}" method="post" style="display: inline;">
+            <a href="/edit_spending/{{ item._id }}">Edit</a>
+            <form action="/delete_spending/{{ item._id }}" method="post" style="display: inline;">
                 <button type="submit">Delete</button>
             </form>
         </li>

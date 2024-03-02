@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Add Budget Entry</title>
+    <title>Add Spending Entry</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <h1>Add New Budget Entry</h1>
-    <form action="/add" method="post">
+    <h1>Add Spending</h1>
+    <form action="/add_spending" method="post">
         <input type="text" name="category" placeholder="Category" required>
         <input type="number" name="amount" placeholder="Amount" required>
         <input type="text" name="description" placeholder="Description" required>
         <input type="date" name="date" required>
-        <button type="submit">Add Entry</button>
+        <button type="submit">Save</button>
     </form>
     <a href="/">Back to Dashboard</a>
 </body>
