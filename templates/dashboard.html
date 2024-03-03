@@ -5,21 +5,99 @@
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <h1>Dashboard</h1>
+    <h1>Budget Tracker</h1>
     <div class="dashboard-nav">
+
         <a href="/" class="button-link">Home</a>
         <a href="/set_budget" class="button-link">Set Budget</a>
         <a href="/view_spending" class="button-link">Spending</a>
         <a href="/view_income" class="button-link">Income</a>
         <a href="/logout" class="button-link">Logout</a>
     </div>
-    <h2>Financial Overview</h2>
-    <p><strong>Total Income:</strong> {{ total_income }}</p>
-    <p><strong>Total Spending:</strong> {{ total_spending }}</p>
-    <p><strong>Remaining Budget:</strong> {{ remaining_budget }}</p>
-    <p><strong>Original Budget:</strong> {{ total_budget }}</p>
+
     
-    <div class="action-buttons">
+
+ 
+
+    <h2 style="text-align: center;">Weekly Snapshot</h2>
+    <div class="weekly_spending"> 
+        
+        
+
+                <!-- hello -->
+                <div class="income">  
+            
+                    <div class="expenditure"> 
+                        <h3>Weekly Spending</h3>
+                        
+                        <div class="weeklys">
+                            {% for spending in spendings %}
+                            <div class="weekly_left_box">
+                                
+                                <div class="interior_weeklys">{{ spending.category }} </div>
+
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                     
+                                <div class="interior_weeklys">${{ "%.2f"|format(spending.amount) }} </div>
+                                
+                                </br>
+                                </br>
+                            
+                            </div>
+                            {% else %}
+                                <tr>
+                                    <td colspan="4">N/A</td>
+                                </tr>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                
+        
+
+
+        <div class="income"> 
+            
+            <div class="expenditure"> 
+                <h3>Weekly Income</h3>
+                
+                <div class="weeklys">
+                    {% for income in incomes %}
+                    <div class="weekly_left_box">
+                        
+                        <div class="interior_weeklys">{{ income.source }} </div>
+                            
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                             
+                        <div class="interior_weeklys">${{ "%.2f"|format(income.amount) }} </div>
+                        </br>
+                        </br>
+            
+                    </div>
+                    {% else %}
+                        <tr>
+                            <td colspan="4">N/A</td>
+                        </tr>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+    </div>
+
+    <div class="fin_overview"> 
+        <h2>Financial Overview</h2>
+        <p><strong>Total Income:</strong> {{ total_income }}</p>
+        <p><strong>Total Spending:</strong> {{ total_spending }}</p>
+        <p><strong>Remaining Budget:</strong> {{ remaining_budget }}</p>
+        <p><strong>Original Budget:</strong> {{ total_budget }}</p>
+    </div>
+    
+    <div class="action-buttons" style="display: flex">
         <a href="/view_spending" class="button-link">View Spending</a>
         <a href="/view_income" class="button-link">View Income</a>
     </div>

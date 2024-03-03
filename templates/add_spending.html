@@ -5,15 +5,25 @@
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <h1>Add Spending</h1>
+    <h1>Budget Tracker</h1>
+    <div class="dashboard-nav">
+
+        <a href="/" class="button-link">Home</a>
+        <a href="/set_budget" class="button-link">Set Budget</a>
+        <a href="/view_spending" class="button-link">Spending</a>
+        <a href="/view_income" class="button-link">Income</a>
+        <a href="/logout" class="button-link">Logout</a>
+    </div>
+    <h2 style="text-align: center;">Add Spending</h2>
     <form action="/add_spending" method="post">
-        <input type="text" name="category" placeholder="Category" required>
-        <input type="number" name="amount" placeholder="Amount" required>
-        <input type="text" name="description" placeholder="Description" required>
-        <input type="date" name="date" required>
+        <input type="text" name="category" placeholder="Category" style="width: 90%; margin: 0 auto; display: block;" required>
+        <input type="number" name="amount" placeholder="Amount" style="width: 90%; margin: 0 auto; display: block;" required>
+        <input type="text" name="description" placeholder="Description" style="width: 90%; margin: 0 auto; display: block;" required>
+        <input type="date" name="date" style="width: 90%; margin: 0 auto; display: block;" required>
         <button type="submit">Save</button>
     </form>
-    <a href="/view_spending" class="button-link">Back</a>
+    <a href="/view_spending" class="button-link" style="width: 20%; margin: 0 auto; display: block; text-align: center;">Back</a>
+
 </body>
 </html>
 
