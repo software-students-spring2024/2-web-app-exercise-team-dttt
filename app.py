@@ -39,11 +39,16 @@ def index():
     user_budget = budget_collection.find({'userId': user_id})
     spending_entries = spending_collection.find({'userId': user_id})
     income_entries = income_collection.find({'userId': user_id})
+    incomes = list(income_collection.find({'userId': ObjectId(session['userId'])}).sort('date', -1).limit(5))
+    spendings = list(spending_collection.find({'userId': ObjectId(session['userId'])}).sort('date', -1).limit(5))
+
     total_spending = sum(item['amount'] for item in spending_entries)
     total_budget = user.get('total_budget', 0)
     total_income = sum(item['amount'] for item in income_entries)
     remaining_budget = total_budget + total_income - total_spending
-    return render_template('dashboard.html', search_results=list(spending_entries), budget=list(user_budget), total_spending=total_spending,total_budget=total_budget, total_income=total_income, remaining_budget=remaining_budget)
+    return render_template('dashboard.html', search_results=list(spending_entries), 
+                           budget=list(user_budget), total_spending=total_spending,total_budget=total_budget, 
+                           total_income=total_income, remaining_budget=remaining_budget, incomes=incomes, spendings=spendings)
 
 
 

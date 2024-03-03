@@ -6,7 +6,7 @@
 </head>
 <body>
     <header>
-        <h1>Dashboard</h1>
+        <h1>Budget Tracker</h1>
         <div class="dashboard-nav">
             <a href="/" class="button-link">Home</a>
             <a href="/set_budget" class="button-link">Set Budget</a>
@@ -15,7 +15,7 @@
             <a href="/logout" class="button-link">Logout</a>
         </div>
     </header>
-    <h2>Spending Details</h2>
+    <h2 style="text-align: center;">Spending Details</h2>
     <table>
         <thead>
             <tr>
@@ -34,26 +34,30 @@
                 <td>{{ spending.description }}</td>
                 <td>{{ spending.date }}</td>
                 <td>
-                    <a href="/edit_spending/{{ spending._id }}" class="button-link">Edit</a>
-                    <form action="/delete_spending/{{ spending._id }}" method="post" style="display: inline;">
+                    
+                    <form action="/delete_spending/{{ spending._id }}" method="post" style="box-shadow: none; border: 0; background: transparent; display:flex;">
+                        <a href="/edit_spending/{{ spending._id }}" class="button-link" style="width: 50%; margin: 0 auto; display: block; text-align: center;">Edit</a>
                         <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
-                        <button type="submit" class="button-link">Delete</button>
+                        <div class="spacer"></div> 
+                        <button type="submit" class="button-link" style="width: 30%; margin: 0 auto; display: block; text-align: center;">X</button>
                     </form>
                 </td>
             </tr>
             {% else %}
             <tr>
-                <td colspan="5">No spending records found.</td>
+                <td colspan="5" style="text-align: center;">No spending records found.</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
     <form action="/search_spending" method="get" style="margin-top: 20px;">
-        <input type="text" name="query" placeholder="Search by Category">
+        <input type="text" name="query" placeholder="Search by Category" style="width: 90%; margin: 0 auto; display: block;">
         <button type="submit">Search</button>
     </form>
-    <footer>
-        <a href="/add_spending" class="button-link">Add New Spending</a>
+    <footer style="display: flex;">
+        <a href="/add_spending" class="button-link" style="width: 90%; margin: 0 auto; display: block; text-align: center;">Add New Spending</a>
+        <div class="spacer"></div>
+        <a href="/" class="button-link" style="width: 20%; margin: 0 auto; display: block; text-align: center;">Back to Home</a>
     </footer>
 </body>
 </html>

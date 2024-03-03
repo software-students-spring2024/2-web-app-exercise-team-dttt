@@ -5,14 +5,23 @@
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <h1>Edit Spending Entry</h1>
+    <h1>Budget Tracker</h1>
+    <div class="dashboard-nav">
+
+        <a href="/" class="button-link">Home</a>
+        <a href="/set_budget" class="button-link">Set Budget</a>
+        <a href="/view_spending" class="button-link">Spending</a>
+        <a href="/view_income" class="button-link">Income</a>
+        <a href="/logout" class="button-link">Logout</a>
+    </div>
+    <h2 style="text-align: center;">Edit Spending Entry</h2>
     <form action="/edit_spending/{{ spending._id }}" method="post">
-        <input type="text" name="category" value="{{ spending.category }}" required>
-        <input type="number" name="amount" value="{{ spending.amount }}" required>
-        <input type="text" name="description" value="{{ spending.description }}" required>
-        <input type="date" name="date" value="{{ spending.date }}" required>
+        <input type="text" name="category" value="{{ spending.category }}" style="width: 90%; margin: 0 auto; display: block;" required>
+        <input type="number" name="amount" value="{{ spending.amount }}" style="width: 90%; margin: 0 auto; display: block;" required>
+        <input type="text" name="description" value="{{ spending.description }}" style="width: 90%; margin: 0 auto; display: block;" required>
+        <input type="date" name="date" value="{{ spending.date }}" style="width: 90%; margin: 0 auto; display: block;" required>
         <button type="submit">Update Entry</button>
     </form>
-    <a href="/view_spending" class="button-link">Back</a>
+    <a href="/view_spending" class="button-link" style="width: 20%; margin: 0 auto; display: block; text-align: center;">Back</a>
 </body>
 </html>

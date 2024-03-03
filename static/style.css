@@ -1,3 +1,6 @@
+h1 {
+    text-align: center;
+}
 body {
     font-family: Arial, sans-serif;
     padding: 20px;
@@ -45,6 +48,57 @@ a:not(.button-link):hover {
     content: none;
 }
 
+.dashboard-nav {
+    display: flex;
+}
+
+.fin_overview {
+    text-align: center;
+     
+}
+
+.weekly_spending {
+    text-align: center;
+    border: 5px solid;
+}
+
+.expenditure {
+    text-align: center;
+}
+
+.weekly_left_box, .weekly_right_box {
+    /* border: 3px solid; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.interior_weeklys {
+    /* border: 3px solid red; */
+    width: 300px;
+
+}
+
+.spacer {
+    height: 20px;
+    width: 20px;
+    /* //border: 3px solid; */
+} 
+
+.spacer_with_border {
+    height: 50px;
+    width: 100%;
+    border: 1px solid;
+} 
+
+.weeklys {
+    border: 1px solid;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
 form {
     background-color: #fff; 
     border: 1px solid #ddd; 
@@ -68,3 +122,4 @@ th, td {
 th {
     background-color: #f2f2f2; 
 }
+
