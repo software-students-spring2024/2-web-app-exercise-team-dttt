@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Spending</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <h1>Dashboard</h1>
+        <a href="/">Home</a> | 
+        <a href="/set_budget">Set Budget</a> | 
+        <a href="/view_spending">Spending</a> | 
+        <a href="/view_income">Income</a> | 
+        <a href="/logout">Logout</a>
+    </header>
+    <h2>Spending Details</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Amount</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for spending in spendings %}
+            <tr>
+                <td>{{ spending.category }}</td>
+                <td>${{ "%.2f"|format(spending.amount) }}</td>
+                <td>{{ spending.description }}</td>
+                <td>{{ spending.date }}</td>
+                <td>
+                    <a href="/edit_spending/{{ spending._id }}">Edit</a> |
+                    <form action="/delete_spending/{{ spending._id }}" method="post" style="display: inline;">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5">No spending records found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <form action="/search_spending" method="get" style="margin-top: 20px;">
+        <input type="text" name="query" placeholder="Search by Category">
+        <button type="submit">Search</button>
+    </form>
+    <footer>
+        <a href="/add_spending" class="button">Add New Spending</a>
+    </footer>
+</body>
+</html>

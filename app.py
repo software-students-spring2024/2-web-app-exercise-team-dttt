@@ -38,9 +38,10 @@ def index():
     user = users_collection.find_one({'_id': user_id})
     user_budget = budget_collection.find({'userId': user_id})
     spending_entries = spending_collection.find({'userId': user_id})
+    income_entries = income_collection.find({'userId': user_id})
     total_spending = sum(item['amount'] for item in spending_entries)
     total_budget = user.get('total_budget', 0)
-    total_income = user.get('total_income', 0)
+    total_income = sum(item['amount'] for item in income_entries)
     remaining_budget = total_budget + total_income - total_spending
     return render_template('dashboard.html', search_results=list(spending_entries), budget=list(user_budget), total_spending=total_spending,total_budget=total_budget, total_income=total_income, remaining_budget=remaining_budget)
 
@@ -88,6 +89,39 @@ def logout():
     session.pop('userId', None)
     return redirect(url_for('index'))
 
+@app.route('/view_spending')
+def view_spending():
+    spendings = spending_collection.find({'userId': ObjectId(session['userId'])})
+    return render_template('view_spending.html', spendings=spendings)
+
+@app.route('/view_income')
+def view_income():
+    incomes = income_collection.find({'userId': ObjectId(session['userId'])})
+    return render_template('view_income.html', incomes=incomes)
+
+@app.route('/add_income', methods=['GET', 'POST'])
+def add_income():
+    if 'username' not in session:
+        return redirect(url_for('login'))
+    
+    if request.method == 'POST':
+        income_source = request.form.get('source')
+        income_amount = request.form.get('income')
+        income_date = request.form.get('income_date')
+        income_entry = {
+            'source': income_source,
+            'userId': ObjectId(session['userId']),
+            'amount': float(income_amount),
+            'date': income_date
+        }
+        income_collection.insert_one(income_entry)
+        users_collection.update_one(
+            {'_id': ObjectId(session['userId'])}, 
+            {'$inc': {'total_income': float(income_amount)}}
+        )
+        return redirect(url_for('view_income'))
+    return render_template('add_income.html')
+
 @app.route('/add_spending', methods=['GET', 'POST'])
 def add_spending():
     if 'username' not in session:
@@ -107,27 +141,27 @@ def add_spending():
             {'_id': ObjectId(session['userId'])}, 
             {'$inc': {'total_spending': amount}}
         )
-        return redirect(url_for('index'))
+        return redirect(url_for('view_spending'))
     return render_template('add_spending.html')
 
-@app.route('/edit/<budget_id>', methods=['GET', 'POST'])
-def edit_budget(budget_id):
+@app.route('/edit_income/<income_id>', methods=['GET', 'POST'])
+def edit_income(income_id):
     if 'username' not in session:
         return redirect(url_for('login'))
     
-    budget_entry = budget_collection.find_one({'_id': ObjectId(budget_id), 'userId': ObjectId(session['userId'])})
+    income_entry = income_collection.find_one({'_id': ObjectId(income_id), 'userId': ObjectId(session['userId'])})
     if request.method == 'POST':
         updated_entry = {
             '$set': {
-                'category': request.form.get('category'),
+                'source': request.form.get('source'),
                 'amount': float(request.form.get('amount')),
                 'description': request.form.get('description'),
                 'date': request.form.get('date')
             }
         }
-        budget_collection.update_one({'_id': ObjectId(budget_id)}, updated_entry)
-        return redirect(url_for('index'))
-    return render_template('edit_budget.html', budget=budget_entry)
+        income_collection.update_one({'_id': ObjectId(income_id)}, updated_entry)
+        return redirect(url_for('view_income'))
+    return render_template('edit_income.html', income=income_entry)
 
 @app.route('/edit_spending/<spending_id>', methods=['GET', 'POST'])
 def edit_spending(spending_id):
@@ -145,50 +179,53 @@ def edit_spending(spending_id):
             }
         }
         spending_collection.update_one({'_id': ObjectId(spending_id)}, updated_entry)
-        return redirect(url_for('index'))
+        return redirect(url_for('view_spending'))
     
     return render_template('edit_spending.html', spending=spending_entry)
 
-@app.route('/delete/<budget_id>', methods=['POST'])
-def delete_budget(budget_id):
+@app.route('/delete_income/<income_id>', methods=['POST'])
+def delete_income(income_id):
     if 'username' not in session:
         return redirect(url_for('login'))
     
-    budget_collection.delete_one({'_id': ObjectId(budget_id), 'userId': ObjectId(session['userId'])})
-    return redirect(url_for('index'))
+    income_collection.delete_one({'_id': ObjectId(income_id), 'userId': ObjectId(session['userId'])})
+    return redirect(url_for('view_income'))
 
 @app.route('/delete_spending/<spending_id>', methods=['POST'])
 def delete_spending(spending_id):
     if 'username' not in session:
         return redirect(url_for('login'))
     
-    # Use the spending_collection to delete the specified spending entry
     spending_collection.delete_one({'_id': ObjectId(spending_id), 'userId': ObjectId(session['userId'])})
-    return redirect(url_for('index'))
+    return redirect(url_for('view_spending'))
 
 
-@app.route('/search', methods=['GET'])
-def search():
+@app.route('/search_spending', methods=['GET'])
+def search_spending():
     if 'username' not in session:
         return redirect(url_for('login'))
     
     user_id = ObjectId(session['userId'])
     query = request.args.get('query')
     
-    search_results = spending_collection.find({'userId': user_id, 'category': query})
-    search_results = list(search_results)  
-    user = users_collection.find_one({'_id': user_id})
-    total_spending = sum(item['amount'] for item in spending_collection.find({'userId': user_id}))
-    total_income = user.get('total_income', 0)
-    original_budget = user.get('total_budget', 0)
-    remaining_budget = original_budget + total_income - total_spending
+    search_results = spending_collection.find({'userId': user_id, 'category': {'$regex': query, '$options': 'i'}})
+    search_results = list(search_results)      
 
-    return render_template('dashboard.html', 
-                           search_results=search_results,
-                           total_income=total_income,
-                           total_spending=total_spending,
-                           remaining_budget=remaining_budget,
-                           total_budget=original_budget)
+    return render_template('view_spending.html', spendings=search_results)
+
+@app.route('/search_income', methods=['GET'])
+def search_income():
+    if 'username' not in session:
+        return redirect(url_for('login'))
+    
+    user_id = ObjectId(session['userId'])
+    query = request.args.get('query')
+    
+    search_results = income_collection.find({'userId': user_id, 'source': {'$regex': query, '$options': 'i'}})
+    search_results = list(search_results)  
+    return render_template('view_income.html', incomes=search_results)
+
+
 
 @app.route('/set_budget', methods=['GET', 'POST'])
 def set_budget():
@@ -204,28 +241,6 @@ def set_budget():
         return redirect(url_for('index'))
     return render_template('set_budget.html')
 
-
-
-@app.route('/add_income', methods=['GET', 'POST'])
-def add_income():
-    if 'username' not in session:
-        return redirect(url_for('login'))
-    
-    if request.method == 'POST':
-        income_amount = request.form.get('income')
-        income_date = request.form.get('income_date')
-        income_entry = {
-            'userId': ObjectId(session['userId']),
-            'amount': float(income_amount),
-            'date': income_date
-        }
-        income_collection.insert_one(income_entry)
-        users_collection.update_one(
-            {'_id': ObjectId(session['userId'])}, 
-            {'$inc': {'total_income': float(income_amount)}}
-        )
-        return redirect(url_for('index'))
-    return render_template('add_income.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

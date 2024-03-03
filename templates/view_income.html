@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Income</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <h1>Dashboard</h1>
+        <a href="/">Home</a> | 
+        <a href="/set_budget">Set Budget</a> | 
+        <a href="/view_spending">Spending</a> | 
+        <a href="/view_income">Income</a> | 
+        <a href="/logout">Logout</a>
+        
+    </header>
+    <h2>Income Details</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Source</th>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for income in incomes %}
+            <tr>
+                <td>{{ income.source }}</td>
+                <td>${{ "%.2f"|format(income.amount) }}</td>
+                <td>{{ income.date }}</td>
+                <td>
+                    <a href="/edit_income/{{ income._id }}">Edit</a> | 
+                    <form action="/delete_income/{{ income._id }}" method="post" style="display: inline;">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="4">No income records found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <form action="/search_income" method="get" style="margin-top: 20px;">
+        <input type="text" name="query" placeholder="Search by Source">
+        <button type="submit">Search</button>
+    </form>
+    <footer>
+        <a href="/add_income" class="button">Add New Income</a>
+    </footer>
+</body>
+</html>
