@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Income Entry</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Edit Income Entry</h1>
+    <form action="/edit_income/{{ income._id }}" method="post">
+        <input type="text" name="source" placeholder="Source" value="{{ income.source }}" required>
+        <input type="number" name="amount" placeholder="Amount" value="{{ income.amount }}" required>
+        <input type="date" name="date" value="{{ income.date }}" required>
+        <button type="submit">Update Entry</button>
+    </form>
+    <a href="/view_income">Back</a>
+</body>
+</html>

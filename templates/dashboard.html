@@ -6,26 +6,16 @@
 </head>
 <body>
     <h1>Dashboard</h1>
-    <a href="/">Home</a> | <a href="/set_budget">Set Budget</a> | <a href="/add_spending">Add Spending</a> | <a href="/add_income">Add Income</a> | <a href="/logout">Logout</a>
+    <a href="/">Home</a> | <a href="/set_budget">Set Budget</a> | <a href="/view_spending">Spending</a> | <a href="/view_income">Income</a> | <a href="/logout">Logout</a>
     <h2>Financial Overview</h2>
     <p><strong>Total Income:</strong> {{ total_income }}</p>
     <p><strong>Total Spending:</strong> {{ total_spending }}</p>
     <p><strong>Remaining Budget:</strong> {{ remaining_budget }}</p>
     <p><strong>Original Budget:</strong> {{ total_budget }}</p>
-    <form action="/search" method="get">
-        <input type="text" name="query" placeholder="Search by Category">
-        <button type="submit">Search</button>
-    </form>
-    <ul>
-        {% for item in search_results %}
-        <li>
-            {{ item.category }}: {{ item.amount }} - {{ item.description }} ({{ item.date }})
-            <a href="/edit_spending/{{ item._id }}">Edit</a>
-            <form action="/delete_spending/{{ item._id }}" method="post" style="display: inline;">
-                <button type="submit">Delete</button>
-            </form>
-        </li>
-        {% endfor %}
-    </ul>
+    
+    <div class="action-buttons">
+        <a href="/view_spending" class="button">View Spending</a>
+        <a href="/view_income" class="button">View Income</a>
+    </div>
 </body>
 </html>
