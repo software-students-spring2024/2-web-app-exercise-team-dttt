@@ -7,11 +7,13 @@
 <body>
     <header>
         <h1>Dashboard</h1>
-        <a href="/">Home</a> | 
-        <a href="/set_budget">Set Budget</a> | 
-        <a href="/view_spending">Spending</a> | 
-        <a href="/view_income">Income</a> | 
-        <a href="/logout">Logout</a>
+        <div class="dashboard-nav">
+            <a href="/" class="button-link">Home</a>
+            <a href="/set_budget" class="button-link">Set Budget</a>
+            <a href="/view_spending" class="button-link">Spending</a>
+            <a href="/view_income" class="button-link">Income</a>
+            <a href="/logout" class="button-link">Logout</a>
+        </div>
     </header>
     <h2>Spending Details</h2>
     <table>
@@ -32,10 +34,10 @@
                 <td>{{ spending.description }}</td>
                 <td>{{ spending.date }}</td>
                 <td>
-                    <a href="/edit_spending/{{ spending._id }}">Edit</a> |
+                    <a href="/edit_spending/{{ spending._id }}" class="button-link">Edit</a>
                     <form action="/delete_spending/{{ spending._id }}" method="post" style="display: inline;">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
-                        <button type="submit">Delete</button>
+                        <button type="submit" class="button-link">Delete</button>
                     </form>
                 </td>
             </tr>
@@ -51,7 +53,7 @@
         <button type="submit">Search</button>
     </form>
     <footer>
-        <a href="/add_spending" class="button">Add New Spending</a>
+        <a href="/add_spending" class="button-link">Add New Spending</a>
     </footer>
 </body>
 </html>

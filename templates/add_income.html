@@ -7,8 +7,8 @@
 <body>
     <h1>New Income</h1>
     <form action="/add_income" method="post">
-        <label for="Souce">Amount</label>
-        <input type="text" name="source" placeholder="Source" required>
+        <label for="source">Source</label>
+        <input type="text" id="source" name="source" placeholder="Source" required>
         <label for="amount">Amount</label>
         <input type="number" id="amount" name="income" placeholder="$100" required>
 
@@ -17,6 +17,6 @@
 
         <button type="submit">SAVE</button>
     </form>
-    <a href="/view_income">Back</a>
+    <a href="/view_income" class="button-link">Back</a>
 </body>
 </html>

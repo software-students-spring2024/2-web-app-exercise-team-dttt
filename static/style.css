@@ -3,27 +3,68 @@ body {
     padding: 20px;
     max-width: 800px;
     margin: auto;
+    background-color: #f4f4f4; 
+    color: #333; 
 }
 
-input[type=text], input[type=number], input[type=date], button {
+input[type=text], input[type=number], input[type=date], button, .button-link {
     padding: 10px;
     margin: 10px 0;
     display: block;
+    width: 100%;
 }
 
-button {
+button, .button-link {
     cursor: pointer;
-    background-color: #4CAF50;
+    background-color: #4CAF50; 
     color: white;
     border: none;
     border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block; 
+    font-size: 16px; 
 }
 
-a {
-    display: inline-block;
-    margin-top: 20px;
+.button-link {
+    padding: 10px 20px; 
+    margin: 10px 5px; 
+}
+
+a:not(.button-link) { 
+    color: #007bff; 
+    text-decoration: none;
+}
+
+a:not(.button-link):hover { 
+    text-decoration: underline;
+}
+
+
+.dashboard-nav a:not(:last-child)::after {
+    content: none;
 }
 
 form {
+    background-color: #fff; 
+    border: 1px solid #ddd; 
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
     margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse; 
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #ddd; 
+}
+
+th {
+    background-color: #f2f2f2; 
 }

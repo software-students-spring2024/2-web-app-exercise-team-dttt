@@ -7,12 +7,12 @@
 <body>
     <h1>Edit Spending Entry</h1>
     <form action="/edit_spending/{{ spending._id }}" method="post">
-        <input type="text" name="category" placeholder="Category" value="{{ spending.category }}" required>
-        <input type="number" name="amount" placeholder="Amount" value="{{ spending.amount }}" required>
-        <input type="text" name="description" placeholder="Description" value="{{ spending.description }}" required>
+        <input type="text" name="category" value="{{ spending.category }}" required>
+        <input type="number" name="amount" value="{{ spending.amount }}" required>
+        <input type="text" name="description" value="{{ spending.description }}" required>
         <input type="date" name="date" value="{{ spending.date }}" required>
         <button type="submit">Update Entry</button>
     </form>
-    <a href="/view_spending">Back</a>
+    <a href="/view_spending" class="button-link">Back</a>
 </body>
 </html>

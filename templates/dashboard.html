@@ -6,7 +6,13 @@
 </head>
 <body>
     <h1>Dashboard</h1>
-    <a href="/">Home</a> | <a href="/set_budget">Set Budget</a> | <a href="/view_spending">Spending</a> | <a href="/view_income">Income</a> | <a href="/logout">Logout</a>
+    <div class="dashboard-nav">
+        <a href="/" class="button-link">Home</a>
+        <a href="/set_budget" class="button-link">Set Budget</a>
+        <a href="/view_spending" class="button-link">Spending</a>
+        <a href="/view_income" class="button-link">Income</a>
+        <a href="/logout" class="button-link">Logout</a>
+    </div>
     <h2>Financial Overview</h2>
     <p><strong>Total Income:</strong> {{ total_income }}</p>
     <p><strong>Total Spending:</strong> {{ total_spending }}</p>
@@ -14,8 +20,8 @@
     <p><strong>Original Budget:</strong> {{ total_budget }}</p>
     
     <div class="action-buttons">
-        <a href="/view_spending" class="button">View Spending</a>
-        <a href="/view_income" class="button">View Income</a>
+        <a href="/view_spending" class="button-link">View Spending</a>
+        <a href="/view_income" class="button-link">View Income</a>
     </div>
 </body>
 </html>

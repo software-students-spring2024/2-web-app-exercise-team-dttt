@@ -7,11 +7,11 @@
 <body>
     <h1>Edit Income Entry</h1>
     <form action="/edit_income/{{ income._id }}" method="post">
-        <input type="text" name="source" placeholder="Source" value="{{ income.source }}" required>
-        <input type="number" name="amount" placeholder="Amount" value="{{ income.amount }}" required>
+        <input type="text" name="source" value="{{ income.source }}" required>
+        <input type="number" name="amount" value="{{ income.amount }}" required>
         <input type="date" name="date" value="{{ income.date }}" required>
         <button type="submit">Update Entry</button>
     </form>
-    <a href="/view_income">Back</a>
+    <a href="/view_income" class="button-link">Back</a>
 </body>
 </html>
